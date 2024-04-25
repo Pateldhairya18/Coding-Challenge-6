@@ -1,0 +1,79 @@
+def find_word_in_grid(board, word):
+    """
+    Check if a word can be formed from the letters in the grid.
+
+    Args:
+        board (list): The 2D board of letters.
+        word (str): The word to be searched for.
+
+    Returns:
+        bool: True if the word can be formed, False otherwise.
+    """
+
+    def dfs(i, j, k):
+        """
+        Depth-first search to find if the word can be formed from the grid.
+
+        Args:
+            i (int): Row index.
+            j (int): Column index.
+            k (int): Index of the current character in the word.
+
+        Returns:
+            bool: True if the word can be formed, False otherwise.
+        """
+        if not (0 <= i < len(board)) or not (0 <= j < len(board[0])) or board[i][j] != word[k]:
+            return False
+        if k == len(word) - 1:
+            return True
+        tmp, board[i][j] = board[i][j], "/"
+        found = dfs(i + 1, j, k + 1) or dfs(i - 1, j, k + 1) or dfs(i, j + 1, k + 1) or dfs(i, j - 1, k + 1)
+        board[i][j] = tmp
+        return found
+
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if dfs(i, j, 0):
+                return True
+    return False
+
+
+def get_board_from_input():
+    """
+    Get the 2D board of letters from user input.
+
+    Returns:
+        list: The 2D board of letters.
+    """
+    try:
+        rows = int(input("Enter the number of rows: "))
+        cols = int(input("Enter the number of columns: "))
+        print("Enter the elements of the 2D board of letters row by row:")
+        board = []
+        for _ in range(rows):
+            row = list(input().strip().upper())
+            if len(row) != cols:
+                raise ValueError("Number of columns does not match")
+            board.append(row)
+        return board
+    except ValueError as e:
+        print("Invalid input:", e)
+        return None
+
+
+def main():
+    """
+    Main function to run the word search.
+    """
+    board = get_board_from_input()
+    if board is None:
+        return
+
+    word = input("Enter the word to be searched for: ").upper()
+
+    result = find_word_in_grid(board, word)
+    print("true" if result else "false")
+
+
+if __name__ == "__main__":
+    main()
