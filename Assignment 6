@@ -77,3 +77,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+#Coding Input And Output Structured
+#input Value 
+
+#Enter the elements of the 2D board of letters row by row:
+
+#ABCE
+#SFCS
+#ADEE
+
+#Enter the word to be searched for: FEES
+
+#output
+
+#false
+
